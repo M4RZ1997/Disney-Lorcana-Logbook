@@ -1,0 +1,67 @@
+% ------------------------------------------------------------------------------------------------- %
+% 							Merlin's Payback		Marcel Zauder 26/03/2024						%
+% Deck Information Page                   			                                                %
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+\newpage
+\tocAddDeck{Merlin's Payback}
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ---------------------------------------- Deck Information --------------------------------------- %
+\DTLgetrowindex{\rowid}{LorcanaDecks}{\dtlcolumnindex{LorcanaDecks}{DeckName}}{Merlin's Payback}
+\DTLgetvalue{\firstdeckcolor}{LorcanaDecks}{\rowid}{\dtlcolumnindex{LorcanaDecks}{Color1}}
+\DTLgetvalue{\seconddeckcolor}{LorcanaDecks}{\rowid}{\dtlcolumnindex{LorcanaDecks}{Color2}}
+\DTLgetvalue{\imagename}{LorcanaDecks}{\rowid}{\dtlcolumnindex{LorcanaDecks}{Image}}
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ---------------------------------- Deck  Main-Information Pages --------------------------------- %
+\renewcommand{\fancypagestyleheader}{Merlin's Payback}
+\renewcommand{\fancypagestylesubheader}{\firstdeckcolor~/~\seconddeckcolor}
+
+\begin{tikzpicture}[remember picture,overlay]%
+	\WinLoseStatisticOrnamentOutline
+	\colorMatchUpTurnNumberStatisticOrnamentOutline
+	
+	%\inDepthStatisticOrnamentOutline{623pt}{-220pt}
+	\inDepthStatisticOrnamentOutline{786.5pt}{-220pt}
+	
+	\inDepthStatisticOrnamentOutline{623pt}{-445pt}
+	\inDepthStatisticOrnamentOutline{786.5pt}{-445pt}
+	
+	\inDepthStatisticOrnamentOutline{623pt}{-670pt}
+	\inDepthStatisticOrnamentOutline{786.5pt}{-670pt}
+\end{tikzpicture}%
+
+% Calculations
+%\calculateGeneralDeckStatistics{Arachnophobia}{LogBook1v1}{LogBook3Player}{LogBook4Player}%
+
+% Win/Lose Statistic
+\frameWinLoseStatistic{50}{50}
+
+% Average Finish Position Statistic
+\begin{tikzpicture}
+	\node {};
+\end{tikzpicture}
+
+% Color Match-Up OR Turn Number Statistic
+\frameColorMatchUpStatistic{0}{0}{0}{0}{0}{0}%
+
+% In-Depth Statistics
+\begin{tikzpicture}[remember picture,overlay]
+	% Deck Banner OR Fast Mana to Win/Lose Frame
+	\frameDeckBanner{\imagename}%
+	
+	% Deck Color Distribution
+	\frameColorDistribution{LorcanaDecks}
+	
+	% Deck Inkwell Distribution
+	\frameInkwellDistribution{LorcanaDecks}
+	
+	% Average Game Length
+	
+	% Ink-Cost Distribution
+	\frameInkCostDistribution{LorcanaDecks}
+	
+	% Card-Type Distribution
+	\frameCardTypeDistribution{LorcanaDecks}
+\end{tikzpicture}

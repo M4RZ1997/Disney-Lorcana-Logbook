@@ -1,0 +1,29 @@
+\DTLnewdb{LogBook1v1}
+
+\newcommand{\addsingleplayerentry}[9]{%
+	\DTLnewrow{LogBook1v1}%
+	\DTLnewdbentry{LogBook1v1}{DeckName}{#1}%
+	\setWinOrLose{LogBook1v1}{#2}%
+	\DTLnewdbentry{LogBook1v1}{PlayerStart}{#3}%
+	\DTLnewdbentry{LogBook1v1}{FastMana}{#4}%
+	\DTLnewdbentry{LogBook1v1}{TurnNumber}{#5}%
+	\DTLnewdbentry{LogBook1v1}{FirstKillTurn}{#5}%
+	\conditionalSet{\listWinConditions}{LogBook1v1}{WinCondition}{#6}%
+	\DTLnewdbentry{LogBook1v1}{MulliganNumber}{#7}%
+	\conditionalSet{\listMulliganCauses}{LogBook1v1}{MulliganCause}{#8}%
+	\conditionalSet{\listObviousProblems}{LogBook1v1}{ObviousProblems}{#9}%
+}
+
+% Real Games
+\addsingleplayerentry{Burning Heavens}{WIN}{SELF}{NONE}{12}{HP0}{1}{ManaScrew}{None}%
+\addsingleplayerentry{Burning Heavens}{WIN}{SELF}{NONE}{4}{HP0}{1}{ManaScrew}{None}%
+\addsingleplayerentry{Hiding Ninjas}{WIN}{OPP}{SELF}{8}{Poison}{0}{None}{None}%
+\addsingleplayerentry{Arachnophobia}{WIN}{OPP}{NONE}{9}{HP0}{0}{None}{None}%
+\addsingleplayerentry{Eldrazi Unbound}{WIN}{SELF}{NONE}{8}{HP0}{0}{None}{None}%
+\addsingleplayerentry{Arachnophobia}{WIN}{OPP}{NONE}{12}{HP0}{0}{None}{None}%
+\addsingleplayerentry{Strength IS Relative}{WIN}{SELF}{SELF}{4}{CommanderDamage}{0}{None}{None}%
+\addsingleplayerentry{Strength IS Relative}{LOSE/WUB}{OPP}{NONE}{8}{HP0}{0}{None}{CardDraw}%
+\addsingleplayerentry{Drive-By Vehicles}{LOSE/BG}{SELF}{NONE}{7}{HP0}{0}{None}{ManaScrew}%
+\addsingleplayerentry{Arachnophobia}{WIN}{OPP}{NONE}{7}{HP0}{1}{ManaScrew}{None}%
+\addsingleplayerentry{Drive-By Vehicles}{WIN}{OPP}{NONE}{15}{HP0}{0}{None}{None}%
+\addsingleplayerentry{Arachnophobia}{LOSE/WUB}{OPP}{NONE}{15}{HP0}{0}{None}{None}%

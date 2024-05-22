@@ -1,0 +1,337 @@
+% ------------------------------------------------------------------------------------------------- %
+%								datastyle.sty 	Marcel Zauder 26/03/2024							%
+% Stylesheet by Marcel                                                                              %
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ---------------------------------------------- Lists -------------------------------------------- %
+\def\listColors{Amber, Amethyst, Emerald, Ruby, Sapphire, Steel}
+
+\def\listWinConditions{HP0, Poison, DeckOut, CardEffect, CommanderDamage}%
+\def\listObviousProblems{ManaScrew, ManaFlood, CardDraw, LackOfResponses, HighCMC, Targeting, Misplays, None}%
+\def\listMulliganCauses{ManaScrew, ManaFlood, BadManaCurve, ActionLack, DeckSpecific, None}
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ------------------------------- Conditional Set for listed Columns ------------------------------ %
+\newcommand{\conditionalSet}[4]{
+	\def\foundMatch{0}%
+	\foreach \str in #1 {
+		\ifnum\pdfstrcmp{#4}{\str}=0%
+			\xdef\foundMatch{1}
+			\DTLnewdbentry{#2}{#3}{#4}%
+			\breakforeach
+		\fi
+	}
+	\ifnum\foundMatch=0%
+		\PackageError{M4RZStyleCorp}{Error: #4 Invalid Input}{The Input can only be: #1}%%
+	\fi
+}
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ---------------------------------- Set Deck  Color Combination ---------------------------------- %
+\newcommand{\setColorIdentity}[3]{%
+	\conditionalSet{\listColors}{#1}{Color1}{#2}%
+	\conditionalSet{\listColors}{#1}{Color2}{#3}%
+}%
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ------------------------- Set Number of Inkable  and Total Number Cards ------------------------- %
+\newcommand{\setInkableAndTotalNumberOfCards}[3]{%
+	\DTLnewdbentry{#1}{CardTotal}{#3}%
+	\DTLnewdbentry{#1}{Inkwell}{#2}%
+}%
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ----------------------------------- Set Ink-Cost Distribution ----------------------------------- %
+\newcommand{\setInkCostDistribution}[9]{%
+	\DTLnewdbentry{#1}{ICZero}{#2}%
+	\DTLnewdbentry{#1}{ICOne}{#3}%
+	\DTLnewdbentry{#1}{ICTwo}{#4}%
+	\DTLnewdbentry{#1}{ICThree}{#5}%
+	\DTLnewdbentry{#1}{ICFour}{#6}%
+	\DTLnewdbentry{#1}{ICFive}{#7}%
+	\DTLnewdbentry{#1}{ICSix}{#8}%
+	\DTLnewdbentry{#1}{ICSevenPlus}{#9}%
+}%
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ---------------------------------- Set Card-Types Distribution ---------------------------------- %
+\newcommand{\setCardTypesDistribution}[6]{%
+	\DTLnewdbentry{#1}{CTCharacters}{#2}%
+	\DTLnewdbentry{#1}{CTItems}{#3}%
+	\DTLnewdbentry{#1}{CTNonSongActions}{#4}%
+	\DTLnewdbentry{#1}{CTSongActions}{#5}%
+	\DTLnewdbentry{#1}{CTLocations}{#6}%
+}%
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ---------------------------- Set PreCon Color Identity and Archetype ---------------------------- %
+\newcommand{\setPreconInformation}[3]{%
+	\conditionalSet{\listColorCombinations}{#1}{DeckColor}{#2}%
+	\conditionalSet{\listDeckArchetypes}{#1}{DeckArchetype}{#3}%
+}%
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ------------------------------ Set First Turn Kill and Turn Number ------------------------------ %
+\newcommand{\setFirstKillAndTurnNumber}[3]{%
+	\DTLnewdbentry{#1}{FirstKillTurn}{#2}%
+	\DTLnewdbentry{#1}{TurnNumber}{#3}%
+}%
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ------------------------------ Set Opponent Color Identity of Lost ------------------------------ %
+\newcommand{\setWinOrLose}[2]{%
+	\ifthenelse{\equal{#2}{WIN}}{%
+		\DTLnewdbentry{#1}{WinOrLose}{#2}%
+		\DTLnewdbentry{#1}{WinnerColorIdentity}{NONE}%
+	}{%
+		\expandafter\def\expandafter\temp\expandafter{#2}%
+		\edef\temp{#2} % Store the argument in a temporary macro
+		\expandafter\splitInput\temp\relax % Call the splitInput function
+		\DTLnewdbentry{#1}{WinOrLose}{LOSE}%
+		\setColorIdentity{#1}{\coloridentity}%
+	}%
+}%
+\def\splitInput#1/#2\relax{%
+	\xdef\coloridentity{#2}
+}
+\newcommand{\oldSetColorIdentity}[2]{
+	\ifthenelse{\equal{#2}{C}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{C}}{}
+	\ifthenelse{\equal{#2}{W}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{W}}{}
+	\ifthenelse{\equal{#2}{U}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{U}}{}
+	\ifthenelse{\equal{#2}{B}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{B}}{}
+	\ifthenelse{\equal{#2}{R}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{R}}{}
+	\ifthenelse{\equal{#2}{G}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{G}}{}
+	
+	\ifthenelse{\equal{#2}{WU}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{WU}}{}
+	\ifthenelse{\equal{#2}{WB}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{WB}}{}
+	\ifthenelse{\equal{#2}{WR}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{WR}}{}
+	\ifthenelse{\equal{#2}{WG}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{WG}}{}
+	\ifthenelse{\equal{#2}{UB}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{UB}}{}
+	\ifthenelse{\equal{#2}{UR}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{UR}}{}
+	\ifthenelse{\equal{#2}{UG}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{UG}}{}
+	\ifthenelse{\equal{#2}{BR}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{BR}}{}
+	\ifthenelse{\equal{#2}{BG}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{BG}}{}
+	\ifthenelse{\equal{#2}{RG}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{RG}}{}
+	
+	\ifthenelse{\equal{#2}{WUB}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{WUB}}{}
+	\ifthenelse{\equal{#2}{WUR}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{WUR}}{}
+	\ifthenelse{\equal{#2}{WUG}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{WUG}}{}
+	\ifthenelse{\equal{#2}{WBR}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{WBR}}{}
+	\ifthenelse{\equal{#2}{WBG}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{WBG}}{}
+	\ifthenelse{\equal{#2}{WRG}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{WRG}}{}
+	\ifthenelse{\equal{#2}{UBR}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{UBR}}{}
+	\ifthenelse{\equal{#2}{UBG}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{UBG}}{}
+	\ifthenelse{\equal{#2}{URG}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{URG}}{}
+	\ifthenelse{\equal{#2}{BRG}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{BRG}}{}
+	
+	\ifthenelse{\equal{#2}{WUBR}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{WUBR}}{}
+	\ifthenelse{\equal{#2}{WUBG}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{WUBG}}{}
+	\ifthenelse{\equal{#2}{WURG}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{WURG}}{}
+	\ifthenelse{\equal{#2}{WBRG}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{WBRG}}{}
+	\ifthenelse{\equal{#2}{UBRG}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{UBRG}}{}
+	
+	\ifthenelse{\equal{#2}{WUBRG}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{WUBRG}}{}
+}
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ----------------------------- Set 3 Player Start/Finish Correlation ----------------------------- %
+\newcommand{\setThreePlayerFinishPosition}[2]{
+	\edef\temp{#2}%
+	\foreach \x/\y in \temp {%
+		\xdef\start{\x}
+		\xdef\finishposition{\y}
+		\ifthenelse{\equal{\start}{SELF}}{%
+			\ifnum\finishposition=1%
+				\DTLnewdbentry{#1}{SelfFinishPosition}{1}%
+			\else%
+				\ifnum\finishposition=2%
+					\DTLnewdbentry{#1}{SelfFinishPosition}{2}%
+				\else%
+					\DTLnewdbentry{#1}{SelfFinishPosition}{3}%
+				\fi%
+			\fi%
+		}{%
+			\ifnum\start=1%
+				\ifnum\finishposition=1%
+					\DTLnewdbentry{#1}{FirstPlayerFinish}{1}%
+				\else%
+					\ifnum\finishposition=2%
+						\DTLnewdbentry{#1}{FirstPlayerFinish}{2}%
+					\else%
+						\DTLnewdbentry{#1}{FirstPlayerFinish}{3}%
+					\fi%
+				\fi%
+			\fi%
+			\ifnum\start=2%
+				\ifnum\finishposition=1%
+					\DTLnewdbentry{#1}{SecondPlayerFinish}{1}%
+				\else%
+					\ifnum\finishposition=2%
+						\DTLnewdbentry{#1}{SecondPlayerFinish}{2}%
+					\else%
+						\DTLnewdbentry{#1}{SecondPlayerFinish}{3}%
+					\fi%
+				\fi%
+			\fi%
+			\ifnum\start=3%
+				\ifnum\finishposition=1%
+					\DTLnewdbentry{#1}{ThirdPlayerFinish}{1}%
+				\else%
+					\ifnum\finishposition=2%
+						\DTLnewdbentry{#1}{ThirdPlayerFinish}{2}%
+					\else%
+						\DTLnewdbentry{#1}{ThirdPlayerFinish}{3}%
+					\fi%
+				\fi%
+			\fi%
+		}%
+	}%
+}%
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ------------------------------------ Set 3 Player Fast Mana ------------------------------------- %
+\newcommand{\setThreePlayerFastMana}[2]{%
+	\expandafter\def\expandafter\temp\expandafter{#2}%
+	\edef\temp{#2} % Store the argument in a temporary macro
+	\expandafter\splitThreePlayerFastMana\temp\relax % Call the splitInput function
+	\ifthenelse{\equal{\firstfastmana}{YES}}{%
+		\DTLnewdbentry{#1}{FirstPlayerFastMana}{YES}%
+	}{%
+		\DTLnewdbentry{#1}{FirstPlayerFastMana}{NO}%
+	}
+	\ifthenelse{\equal{\secondfastmana}{YES}}{%
+		\DTLnewdbentry{#1}{SecondPlayerFastMana}{YES}%
+	}{%
+		\DTLnewdbentry{#1}{SecondPlayerFastMana}{NO}%
+	}
+	\ifthenelse{\equal{\thirdfastmana}{YES}}{%
+		\DTLnewdbentry{#1}{ThirdPlayerFastMana}{YES}%
+	}{%
+		\DTLnewdbentry{#1}{ThirdPlayerFastMana}{NO}%
+	}
+}%
+\def\splitThreePlayerFastMana#1/#2/#3\relax{%
+	\xdef\firstfastmana{#1}%
+	\xdef\secondfastmana{#2}%
+	\xdef\thirdfastmana{#3}%
+}%
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ----------------------------- Set 4 Player Start/Finish Correlation ----------------------------- %
+\newcommand{\setFourPlayerFinishPosition}[2]{
+	\edef\temp{#2}%
+	\foreach \x/\y in \temp {%
+		\xdef\start{\x}
+		\xdef\finishposition{\y}
+		\ifthenelse{\equal{\start}{SELF}}{%
+			\ifnum\finishposition=1%
+				\DTLnewdbentry{#1}{SelfFinishPosition}{1}%
+			\else%
+				\ifnum\finishposition=2%
+					\DTLnewdbentry{#1}{SelfFinishPosition}{2}%
+				\else%
+					\ifnum\finishposition=3%
+						\DTLnewdbentry{#1}{SelfFinishPosition}{3}%
+					\else%
+						\DTLnewdbentry{#1}{SelfFinishPosition}{4}%
+					\fi%
+				\fi%
+			\fi%
+		}{%
+			\ifnum\start=1%
+				\ifnum\finishposition=1%
+					\DTLnewdbentry{#1}{FirstPlayerFinish}{1}%
+				\else%
+					\ifnum\finishposition=2%
+						\DTLnewdbentry{#1}{FirstPlayerFinish}{2}%
+					\else%
+						\ifnum\finishposition=3%
+							\DTLnewdbentry{#1}{FirstPlayerFinish}{3}%
+						\else%
+							\DTLnewdbentry{#1}{FirstPlayerFinish}{4}%
+						\fi%
+					\fi%
+				\fi%
+			\fi%
+			\ifnum\start=2%
+				\ifnum\finishposition=1%
+					\DTLnewdbentry{#1}{SecondPlayerFinish}{1}%
+				\else%
+					\ifnum\finishposition=2%
+						\DTLnewdbentry{#1}{SecondPlayerFinish}{2}%
+					\else%
+						\ifnum\finishposition=3%
+							\DTLnewdbentry{#1}{SecondPlayerFinish}{3}%
+						\else%
+							\DTLnewdbentry{#1}{SecondPlayerFinish}{4}%
+						\fi%
+					\fi%
+				\fi%
+			\fi%
+			\ifnum\start=3%
+				\ifnum\finishposition=1%
+					\DTLnewdbentry{#1}{ThirdPlayerFinish}{1}%
+				\else%
+					\ifnum\finishposition=2%
+						\DTLnewdbentry{#1}{ThirdPlayerFinish}{2}%
+					\else%
+						\ifnum\finishposition=3%
+							\DTLnewdbentry{#1}{ThirdPlayerFinish}{3}%
+						\else%
+							\DTLnewdbentry{#1}{ThirdPlayerFinish}{4}%
+						\fi%
+					\fi%
+				\fi%
+			\fi%
+			\ifnum\start=4%
+				\ifnum\finishposition=1%
+					\DTLnewdbentry{#1}{FourthPlayerFinish}{1}%
+				\else%
+					\ifnum\finishposition=2%
+						\DTLnewdbentry{#1}{FourthPlayerFinish}{2}%
+					\else%
+						\ifnum\finishposition=3%
+							\DTLnewdbentry{#1}{FourthPlayerFinish}{3}%
+						\else%
+							\DTLnewdbentry{#1}{FourthPlayerFinish}{4}%
+						\fi%
+					\fi%
+				\fi%
+			\fi%
+		}%
+	}%
+}%
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ------------------------------------ Set 4 Player Fast Mana ------------------------------------- %
+\newcommand{\setFourPlayerFastMana}[2]{%
+	\expandafter\def\expandafter\temp\expandafter{#2}%
+	\edef\temp{#2} % Store the argument in a temporary macro
+	\expandafter\splitFourPlayerFastMana\temp\relax % Call the splitInput function
+	\ifthenelse{\equal{\firstfastmana}{YES}}{%
+		\DTLnewdbentry{#1}{FirstPlayerFastMana}{YES}%
+	}{%
+		\DTLnewdbentry{#1}{FirstPlayerFastMana}{NO}%
+	}
+	\ifthenelse{\equal{\secondfastmana}{YES}}{%
+		\DTLnewdbentry{#1}{SecondPlayerFastMana}{YES}%
+	}{%
+		\DTLnewdbentry{#1}{SecondPlayerFastMana}{NO}%
+	}
+	\ifthenelse{\equal{\thirdfastmana}{YES}}{%
+		\DTLnewdbentry{#1}{ThirdPlayerFastMana}{YES}%
+	}{%
+		\DTLnewdbentry{#1}{ThirdPlayerFastMana}{NO}%
+	}
+	\ifthenelse{\equal{\fourthfastmana}{YES}}{%
+		\DTLnewdbentry{#1}{FourthPlayerFastMana}{YES}%
+	}{%
+		\DTLnewdbentry{#1}{FourthPlayerFastMana}{NO}%
+	}
+}%
+\def\splitFourPlayerFastMana#1/#2/#3/#4\relax{%
+	\xdef\firstfastmana{#1}%
+	\xdef\secondfastmana{#2}%
+	\xdef\thirdfastmana{#3}%
+	\xdef\fourthfastmana{#4}%
+}%

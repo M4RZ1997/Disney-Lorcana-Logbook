@@ -1,0 +1,81 @@
+\DTLnewdb{LorcanaDecks}
+
+\newcommand{\addLorcanaDeck}[7]{%
+	\DTLnewrow{LorcanaDecks}%
+	\DTLnewdbentry{LorcanaDecks}{DeckName}{#1}%
+	\setColorIdentity{LorcanaDecks}#2%
+	\DTLnewdbentry{LorcanaDecks}{Image}{#3}%
+	\setInkableAndTotalNumberOfCards{LorcanaDecks}#4%
+	\DTLnewdbentry{LorcanaDecks}{FirstColor}{#5}%
+	\setInkCostDistribution{LorcanaDecks}#6%
+	\setCardTypesDistribution{LorcanaDecks}#7%
+}
+
+\addLorcanaDeck{McDuck's Magic Item Vault}% Deck Name
+	{{Ruby}{Sapphire}}% Colors (Amethyst, Emerald, Ruby, Steel, Amber, Sapphire)
+	{McDuck_Ruby-Sapphire}% Image
+	{{49}{60}}% Number of Inkable Cards / Total Number of Cards
+	{31}% Number of First Color Cards
+	{% Ink-Cost Distribution
+		{0}%0
+		{8}%1
+		{14}%2
+		{18}%3
+		{14}%4
+		{6}%5
+		{0}%6
+		{0}%7+
+	}%
+	{% Card-Types Distribution
+		{43}% Characters
+		{6}% Items
+		{4}% Non-Song Actions
+		{0}% Song Actions
+		{7}% Locations
+	}%
+	
+\addLorcanaDeck{Merlin's Payback}% Deck Name
+	{{Amethyst}{Steel}}% Colors (Amethyst, Emerald, Ruby, Steel, Amber, Sapphire)
+	{Merlin_s_Payback}% Image
+	{{54}{60}}% Number of Inkable Cards / Total Number of Cards
+	{29}% Number of First Color Cards
+	{% Ink-Cost Distribution
+		{0}%0
+		{10}%1
+		{24}%2
+		{13}%3
+		{12}%4
+		{0}%5
+		{1}%6
+		{0}%7+
+	}%
+	{% Card-Types Distribution
+		{49}% Characters
+		{4}% Items
+		{4}% Non-Song Actions
+		{0}% Song Actions
+		{3}% Locations
+	}%
+	
+\addLorcanaDeck{TestDeck}% Deck Name
+	{{Amber}{Steel}}% Colors (Amethyst, Emerald, Ruby, Steel, Amber, Sapphire)
+	{Test_Deck}% Image
+	{{50}{60}}% Number of Inkable Cards / Total Number of Cards
+	{35}% Number of First Color Cards
+	{% Ink-Cost Distribution
+		{0}%0
+		{5}%1
+		{7}%2
+		{9}%3
+		{18}%4
+		{9}%5
+		{7}%6
+		{5}%7+
+	}%
+	{% Card-Types Distribution
+		{20}% Characters
+		{10}% Items
+		{10}% Non-Song Actions
+		{10}% Song Actions
+		{10}% Locations
+	}%

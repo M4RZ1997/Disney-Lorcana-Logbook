@@ -1,0 +1,137 @@
+\documentclass{article}
+
+\usepackage{data/datastyle}
+\usepackage{stylesheets/shadowfy}
+\usepackage{stylesheets/dlc_lb_stylesheet}
+%\usepackage{stylesheets/cmd_lb_commands}
+%\usepackage{stylesheets/cmd_lb_helpers}
+
+\usepackage{stylesheets/dlc_lb_display_commands}
+
+\geometry{a3paper, landscape}
+
+\newfontfamily\titlefont{BrandonGrotesque-Black}[Path=./fonts/BrandonGrotesqueCondensed/, Extension=.otf, UprightFont=HvDTrial_BrandonGrotesqueCond-Black-BF64a627d8f1224, ItalicFont=HvDTrial_BrandonGrotesqueCond-BlackItalic-BF64a627d8d6e8a] % requires XeLaTeX or LuaTeX
+\newfontfamily\disneyfont{waltograph}[Path=./fonts/Waltograph/, Extension=.ttf, UprightFont=waltograph42, BoldFont=waltographUI] % requires XeLaTeX or LuaTeX
+\newfontfamily\entryfont{BrandonGrotesque-Regular}[Path=./fonts/BrandonGrotesqueCondensed/, Extension=.otf, UprightFont=HvDTrial_BrandonGrotesqueCond-Regular-BF64a627d905063, BoldFont=HvDTrial_BrandonGrotesqueCond-Bold-BF64a627d8804fa, ItalicFont=HvDTrial_BrandonGrotesqueCond-RegularItalic-BF64a627d8e4fe1, BoldItalicFont=HvDTrial_BrandonGrotesqueCond-BoldItalic-BF64a627d8f0ff2] % requires XeLaTeX or LuaTeX
+
+\newfontfamily\lightentryfont{BrandonGrotesque-Light}[Path=./fonts/BrandonGrotesqueCondensed/, Extension=.otf, UprightFont=HvDTrial_BrandonGrotesqueCond-Light-BF64a627d8d5a2a, ItalicFont=HvDTrial_BrandonGrotesqueCond-LightItalic-BF64a627d7f1119] % requires XeLaTeX or LuaTeX
+\newfontfamily\thinentryfont{BrandonGrotesque-Light}[Path=./fonts/BrandonGrotesqueCondensed/, Extension=.otf, UprightFont=HvDTrial_BrandonGrotesqueCond-Thin-BF64a627d8b38c4, ItalicFont=HvDTrial_BrandonGrotesqueCond-ThinItalic-BF64a627d901c34] % requires XeLaTeX or LuaTeX
+\newfontfamily\mediumentryfont{BrandonGrotesque-Light}[Path=./fonts/BrandonGrotesqueCondensed/, Extension=.otf, UprightFont=HvDTrial_BrandonGrotesqueCond-Medium-BF64a627d81d9ec, ItalicFont=HvDTrial_BrandonGrotesqueCond-MediumItalic-BF64a627d8dfc32] % requires XeLaTeX or LuaTeX
+
+\begin{document}
+	% Data Input
+	\input{data/decklist.tex}
+	%\input{data/data_1v1.tex}
+	%\input{data/data_3player.tex}
+	%\input{data/data_4player.tex}
+	
+	\hypertarget{startofdocument}{}
+	
+	% Ornaments
+	\begin{tikzpicture}[remember picture,overlay]%
+		\WinLoseStatisticOrnamentOutline
+		\colorMatchUpTurnNumberStatisticOrnamentOutline
+		
+		%\inDepthStatisticOrnamentOutline{623pt}{-220pt}
+		\inDepthStatisticOrnamentOutline{786.5pt}{-220pt}
+		
+		\inDepthStatisticOrnamentOutline{623pt}{-445pt}
+		\inDepthStatisticOrnamentOutline{786.5pt}{-445pt}
+		
+		\inDepthStatisticOrnamentOutline{623pt}{-670pt}
+		\inDepthStatisticOrnamentOutline{786.5pt}{-670pt}
+	\end{tikzpicture}%
+	
+	% First 28 ToC Entries
+	{\Large%
+	\begin{tikzpicture}[remember picture,overlay]%
+		\node[xshift=-488pt,yshift=295pt, text width=620pt, anchor=north west] at (current page.center) {%
+			\begin{minipage}[t][275pt]{620pt}
+				\textcolor{white}{\entryfont\Huge{\textbf{~~~~Table~~of~~Decks}}}
+				\setlength{\columnsep}{30pt}\vspace*{-3pt}
+				\begin{multicols}{2}
+					\color{white}
+					\renewcommand{\contentsname}{}
+					\tableofcontents
+					\thispagestyle{fancy}
+				\end{multicols}
+			\end{minipage}
+		};%
+	\end{tikzpicture}%
+	}%
+	
+	% Second 12 ToC Entries
+	{\Large%
+	\begin{tikzpicture}[remember picture,overlay]%
+		\node[xshift=-488pt,yshift=-163pt, text width=620pt, anchor=north west] at (current page.center) {%
+			\begin{minipage}[t][275pt]{620pt}
+				\setlength{\columnsep}{30pt}
+				\begin{multicols}{2}
+					\color{white}
+					\listofsecondContents
+					\thispagestyle{fancy}
+				\end{multicols}
+			\end{minipage}
+		};%
+		\node[xshift=-488pt,yshift=-323pt, text width=620pt, align=center, anchor=north west] at (current page.center) {%
+			\entryfont\color{lightgray}\textbf{This Table of Decks does support a total of 40 Decks}
+		};%
+	\end{tikzpicture}%
+	}%
+	
+	\begin{tikzpicture}[remember picture,overlay]
+		% M4RZ-Crafting Icon
+		\node[xshift=767pt, yshift=-60pt] {%
+			\includegraphics[width = 200pt, height = 200pt, keepaspectratio]{images/M4RZ-Crafting_icon.png}%
+		};%
+	\end{tikzpicture}
+	
+	\input{deck_information_pages/Deck_Information_Connector.tex}
+	
+	% Pre-Constructed Decks Statistic
+	\newpage
+	\renewcommand{\fancypagestyleheader}{Starter Decks - General Statistic}
+	\renewcommand{\fancypagestylesubheader}{}
+	\tocAddDeck{Starter Decks}
+	
+	\input{data/data_starter_1v1.tex}
+	\input{data/data_starter_3player.tex}
+	\input{data/data_starter_4player.tex}
+	
+	%\xdef\logbook{PreConstructedLogbook}
+	% General Statistic Page
+	% Ornaments
+	\begin{tikzpicture}[remember picture,overlay]%
+		\WinLoseStatisticOrnamentOutline
+		\colorMatchUpTurnNumberStatisticOrnamentOutline
+		
+		%\inDepthStatisticOrnamentOutline{623pt}{-220pt}
+		\inDepthStatisticOrnamentOutline{786.5pt}{-220pt}
+		
+		\inDepthStatisticOrnamentOutline{623pt}{-445pt}
+		\inDepthStatisticOrnamentOutline{786.5pt}{-445pt}
+		
+		\inDepthStatisticOrnamentOutline{623pt}{-670pt}
+		\inDepthStatisticOrnamentOutline{786.5pt}{-670pt}
+	\end{tikzpicture}%
+	
+	% Calculations
+	%\calculateGeneralDeckStatistics{Arachnophobia}{LogBook1v1}{LogBook3Player}{LogBook4Player}%
+	
+	% Win/Lose Statistic
+	\frameWinLoseStatistic{50}{50}
+	
+	% Average Finish Position Statistic
+	\begin{tikzpicture}
+		\node {};
+	\end{tikzpicture}
+	
+	% Color Match-Up OR Turn Number Statistic
+	\frameColorMatchUpStatistic{2}{5}{3}{2}{1}{4}%
+	
+	% In-Depth Statistics
+	\begin{tikzpicture}[remember picture,overlay]
+		% Deck Banner OR Fast Mana to Win/Lose Frame
+		\frameDeckBanner{Starter_Deck}%
+	\end{tikzpicture}
+\end{document}

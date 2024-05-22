@@ -1,0 +1,214 @@
+% ------------------------------------------------------------------------------------------------- %
+% 								depotstyle.sty 	Marcel Zauder 26/03/2024							%
+% Stylesheet by Marcel                                                                              %
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ---------------------------------------- User Credentials --------------------------------------- %
+% PLEASE ADJUST
+\newcommand{\name}{Zauder}
+\newcommand{\surname}{Marcel Matti}
+% ################################################################################################# %
+% ----------------------------------------- Miscellaneous ----------------------------------------- %
+\usepackage[usegeometry]{typearea}% load before geometry
+\usepackage{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{reledmac} % for enumerating pages
+\usepackage{changepage} % for adjustwidth/indent
+\usepackage{paralist} % for enumerating
+\usepackage{hyperref}
+\usepackage{datatool} % for database
+\usepackage{xstring}
+
+\usepackage{fontspec}
+\usepackage{anyfontsize}
+\usepackage{tocloft}
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ------------------------------------------- Geometry -------------------------------------------- %
+\newgeometry{
+	hmargin = 2.5cm,
+	bottom = 25mm,
+	height = 150mm,
+	includehead,
+	top = 50pt,
+	headsep = 50pt,
+	textheight = 675pt,
+	textwidth = 1000pt,
+	marginparwidth = 50pt
+}
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% --------------------------------------------- Math ---------------------------------------------- %
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{scalerel}
+\usepackage{xfp}
+\usepackage[np, autolanguage]{numprint}
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% -------------------------------------------- Tables --------------------------------------------- %
+\usepackage{colortbl}
+\usepackage{pgfplotstable}
+\usepackage{multirow}
+\usepackage{array, boldline, makecell, booktabs}
+
+\usepackage{multicol}
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ---------------------------------------- PGF/Tikz-Plots ----------------------------------------- %
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.geometric, arrows}
+\usetikzlibrary{calc}
+\usepackage{pgf-pie}
+
+\usepackage{pstricks}
+\usepackage{pst-plot,pstricks-add}
+
+% ## Nice Arrow ## %
+\tikzstyle{arrow} = [thick,->,>=stealth]
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% --------------------------------------- Debugging Tools ----------------------------------------- %
+\usepackage{layout}
+%\usepackage{showframe}
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ------------------------------------------ Page Style ------------------------------------------- %
+% Positions (paperwidth=1195pt, paperheight=845pt)
+\tikzset{
+  posBattlefieldStyle/.style={%
+	xshift=-170pt,%-0.1425\paperwidth,%
+	yshift=80.625pt,%0.125\paperheight-25pt%
+  },%
+  posLandsStyle/.style={%
+	xshift=-170pt,%-0.1425\paperwidth,%
+	yshift=-251.0375,%-0.2675\paperheight-25pt%
+  },%
+  posCommanderLeftStyle/.style={%
+	xshift=260pt,%0.2175\paperwidth,%
+	yshift=196.8125,%0.2625\paperheight-25pt%
+  },%
+  posCommanderRightStyle/.style={%
+	xshift=427pt,%0.3575\paperwidth,%
+	yshift=196.8125,%0.2625\paperheight-25pt%
+  },%
+  posLibraryStyle/.style={%
+	xshift=260pt,%0.2175\paperwidth,%
+	yshift=-25pt,%
+  },%
+  posGraveyardStyle/.style={%
+	xshift=427pt,%0.3575\paperwidth,%
+	yshift=-25pt,%
+  },%
+  posExtrasStyle/.style={%
+	xshift=260pt,%0.2175\paperwidth,%
+	yshift=-246.8125,%-0.2625\paperheight-25pt%
+  },%
+  posExileStyle/.style={%
+	xshift=427pt,%0.3575\paperwidth,%
+	yshift=-246.8125,%-0.2625\paperheight-25pt%
+  }%
+}
+
+% Colors
+\newcommand{\sectionColour}{darkgray}%
+\newcommand{\sectionOpacity}{0.8}%
+
+% Header
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\newcommand{\fancypagestyleheader}{Disney Lorcana: Deck Logbook}
+\newcommand{\fancypagestylesubheader}{}
+\newcommand{\linktotop}{}
+%\fancyheadoffset{0pt}
+
+\renewcommand*{\headrulewidth}{0pt} % no rule for header
+\renewcommand*{\footrulewidth}{0pt} % no rule for footer
+
+\fancyhf {} % clear all headers and footers
+
+% Header is used to include the page background
+\fancyhead{
+	\begin{tikzpicture}[remember picture,overlay]
+		\node[inner sep=0pt] at (current page.center) {\includegraphics[width=\paperwidth,height=\paperheight]{images/wood_texture.jpg}};
+		
+		\begin{scope}
+			\node[yshift=-25pt, inner sep=0pt, minimum width=0.9\paperwidth, minimum height=0.825\paperheight, rounded corners=25pt, path picture={
+				\node at (path picture bounding box.center) {\includegraphics[height=0.825\paperheight]{images/playmat_background.jpg}};
+  			}] at (current page.center) {};
+		\end{scope}
+  		
+		\node[anchor=north west, text width=\paperwidth, align=left, font=\Huge, inner sep=1cm] at (current page.north west) {\disneyfont{\fontsize{60}{50}\selectfont\shadowfy{\fancypagestyleheader}}};
+		\ifx&\fancypagestylesubheader&\else%
+			\node[anchor=north west, text width=\paperwidth, align=left, font=\Huge, inner sep=1cm, xshift=40pt, yshift=-43pt] at (current page.north west) {\shadowfy{\fancypagestylesubheader}};
+		\fi
+		
+		\ifthenelse{\equal{\linktotop}{}}{}{%
+			\node[anchor=east, align=right, font=\Large, inner sep=0cm, xshift=-80pt, yshift=57pt] at (current page.south east) {%
+				\hyperlink{startofdocument}{\shadowfy{back to top}}%
+			};%
+		}%
+   \end{tikzpicture}
+}
+%\fancyfoot[C]{\thepage}
+%\renewcommand{\footrulewidth}{0.4pt}
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ------------------------------------------- MARZColor ------------------------------------------- %
+\usepackage{xcolor}
+\definecolor{MarzDarkBlue}{rgb}{0.1, 0, 0.2}
+\definecolor{MarzBlue}{rgb}{0.1, 0.1, 0.5}
+\definecolor{MarzRoyal}{rgb}{0.2, 0.2, 0.8}
+\definecolor{MarzGreen}{rgb}{0, 0.4, 0}
+\definecolor{MarzPurple}{rgb}{0.5, 0, 0.5}
+\definecolor{MarzGold}{rgb}{1.0, 0.84, 0}
+\definecolor{MarzRed}{rgb}{1.0, 0, 0}
+\definecolor{MarzDarkRed}{rgb}{0.75, 0, 0}
+\definecolor{MarzOrange}{rgb}{1, 0.6, 0}
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ------------------------------------------ LorcanaColor ----------------------------------------- %
+\definecolor{LorcanaAmber}{rgb}{0.96, 0.7, 0}
+\definecolor{LorcanaAmethyst}{rgb}{0.5, 0.22, 0.482}
+\definecolor{LorcanaEmerald}{rgb}{0.16, 0.54, 0.2}
+\definecolor{LorcanaRuby}{rgb}{0.82, 0.03, 0.18}
+\definecolor{LorcanaSapphire}{rgb}{0, 0.54, 0.77}
+\definecolor{LorcanaSteel}{rgb}{0.62, 0.66, 0.7}
+
+\definecolor{LorcanaGold}{rgb}{0.84, 0.73, 0.53}
+% ########## Text-Color Changer ######### %
+\newcommand{\changetextcolor}[2]{{\color{#1} #2}}
+% ####################################### %
+
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ---------------------------------- Secondary Table-of-Contents ---------------------------------- %
+\newlistof{secondContents}{stoc}{}
+\newcounter{NoToCEntries}
+\setcounter{NoToCEntries}{0}
+
+\newcommand{\tocAddDeck}[1]{%
+	\phantomsection%
+	\ifthenelse{\value{NoToCEntries}<28}{%
+		\addcontentsline{toc}{section}{#1}%
+	}{%
+		\addcontentsline{stoc}{section}{#1}%
+	}%
+	\stepcounter{NoToCEntries}%
+}%
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ------------------------------------------ Variables -------------------------------------------- %
+\newcommand{\Year}[1]{
+	\ifx\xyear\undefined%
+		\newcommand{\tyear}{#1}%
+		\newcommand{\xyear}{#1~}%
+	\else%
+		\PackageWarning{M4RZStyleCorp}{The year is only set once for the whole document!}%
+	\fi%
+}
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
